@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>5OFO Studio | Home</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      background-image: url('https://k.top4top.io/p_34633s6w21.gif');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+  </style>
+</head>
+<body class="bg-pink-50 text-[#444] min-h-screen relative">
+
+  <div class="absolute inset-0 bg-black bg-opacity-45 backdrop-blur-sm z-0 pointer-events-none"></div>
+    <div id="visitor-count" class="mt-6 inline-block bg-white/10 text-white px-6 py-2 rounded-full backdrop-blur-md border border-white/20 shadow-md text-sm" style="position: absolute;">
+  Loading visitors...
+</div>
+
+
+  <div class="fixed top-4 right-4 z-50">
+    <select id="lang-select" class="bg-white/80 text-pink-600 px-4 py-2 rounded-full shadow hover:bg-pink-100 transition">
+      <option value="en">English</option>
+      <option value="ar">العربية</option>
+    </select>
+  </div>
+
+  <div id="en" class="relative z-10">
+    <header class="py-4 px-4">
+      <div class="max-w-7xl mx-auto flex justify-between items-center bg-white/20 backdrop-blur-md rounded-full px-6 py-3 shadow-lg border border-white/30">
+        <h1 class="text-2xl font-bold text-white flex items-center space-x-2">
+          <span>🌸</span><span>5OFO Studio</span>
+        </h1>
+        <nav class="space-x-6">
+          <a href="index.html" onclick="setLang('en')" class="text-white hover:text-pink-200 transition">Home</a>
+          <a href="products.html" onclick="setLang('en')" class="text-white hover:text-pink-200 transition">Products</a>
+          <a href="about.html" onclick="setLang('en')" class="text-white hover:text-pink-200 transition">About</a>
+          <a href="contact.html" onclick="setLang('en')" class="text-white hover:text-pink-200 transition">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="text-center mt-12">
+      <h2 class="text-4xl font-bold text-pink-600 mb-4">Welcome to 5OFO Store </h2>
+      <p class="text-lg text-gray-200">It is a store that sells all online services, Discord services, and social media services in general.</p>
+    </main>
+  </div>
+
+  <div id="ar" class="hidden relative z-10" dir="rtl">
+    <header class="py-4 px-4">
+      <div class="max-w-7xl mx-auto flex justify-between items-center bg-white/20 backdrop-blur-md rounded-full px-6 py-3 shadow-lg border border-white/30">
+        <h1 class="text-2xl font-bold text-white flex items-center space-x-2">
+          <span>🌸</span><span>استوديو 5OFO</span>
+        </h1>
+        <nav class="space-x-6 flex flex-row-reverse gap-6">
+          <a href="home.html" onclick="setLang('ar')" class="text-white hover:text-pink-200 transition">الرئيسية</a>
+          <a href="products.html" onclick="setLang('ar')" class="text-white hover:text-pink-200 transition">المنتجات</a>
+          <a href="about.html" onclick="setLang('ar')" class="text-white hover:text-pink-200 transition">من نحن</a>
+          <a href="contact.html" onclick="setLang('ar')" class="text-white hover:text-pink-200 transition">اتصل بنا</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="text-center mt-12">
+      <h2 class="text-4xl font-bold text-[#D16A7D] mb-4">مرحبا بكم في 5OFO store </h2>
+      <p class="text-lg text-gray-200">هو ستور لبيع جميع الخدمات الاونلاين و خدمات الديسكورد و خدمات السوشيال ميديا بشكل عام</p>
+    </main>
+  </div>
+
+  <script>
+    const langSelect = document.getElementById("lang-select");
+    const enDiv = document.getElementById("en");
+    const arDiv = document.getElementById("ar");
+
+    function setLang(lang) {
+      localStorage.setItem("selectedLang", lang);
+      langSelect.value = lang;
+      toggleLang(lang);
+    }
+
+    function toggleLang(lang) {
+      if (lang === "ar") {
+        enDiv.classList.add("hidden");
+        arDiv.classList.remove("hidden");
+      } else {
+        arDiv.classList.add("hidden");
+        enDiv.classList.remove("hidden");
+      }
+    }
+
+    const savedLang = localStorage.getItem("selectedLang") || "en";
+    langSelect.value = savedLang;
+    toggleLang(savedLang);
+
+    langSelect.addEventListener("change", () => {
+      const selected = langSelect.value;
+      setLang(selected);
+    });
+
+    fetch('counter.php')
+  .then(res => res.text())
+  .then(count => {
+    const lang = localStorage.getItem('selectedLang') || 'en';
+    document.querySelectorAll('#visitor-count').forEach(el => {
+      el.textContent = lang === 'ar'
+        ? `عدد الزوار: ${count}`
+        : `Total Visitors: ${count}`;
+    });
+  })
+  .catch(() => {
+    const lang = localStorage.getItem('selectedLang') || 'en';
+    document.querySelectorAll('#visitor-count').forEach(el => {
+      el.textContent = lang === 'ar'
+        ? `عدد الزوار: غير متاح`
+        : `Total Visitors: N/A`;
+    });
+  });
+  </script>
+</body>
+</html>
